@@ -10,7 +10,7 @@ export function ExpandLess() {
       fill="#000000"
     >
       <path d="M0 0h24v24H0V0z" fill="none" />
-      <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z" />
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" />
     </svg>
   );
 }

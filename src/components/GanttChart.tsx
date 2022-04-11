@@ -28,15 +28,23 @@ import {
   getDateRange,
 } from "../utils/moment-utils";
 import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+import Button from "react-bootstrap/Button";
+import ProgressBar from "react-bootstrap/ProgressBar";
 import styled from "styled-components";
 import { MyThemedProps } from "../theme";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 const GanttButton = styled(Button)`
   && {
     background: ${(props: MyThemedProps<{}>) =>
       props.theme.palette.primary.main};
+    border-color: #bbb;
     color: white;
+  }
+  &:hover {
+    background: ${(props: MyThemedProps<{}>) =>
+      props.theme.palette.primary.dark};
   }
 `;
 
@@ -96,10 +104,10 @@ export function GanttChart() {
   const [items, setItems] = useState<TimelineItem<Item, number>[]>(MILESTONES);
   const [timeUnit, setTimeUnit] = useState<TimeUnit>("week");
   const [visibleTimeStart, setVisibleTimeStart] = useState<number>(
-    getCurrentUnitStart(timeUnit)
+    getCurrentUnitStart("week")
   );
   const [visibleTimeEnd, setVisibleTimeEnd] = useState<number>(
-    getCurrentUnitEnd(timeUnit)
+    getCurrentUnitEnd("week")
   );
 
   const onPrevClick = () => {
@@ -170,18 +178,91 @@ export function GanttChart() {
         return Object.assign({}, group, {
           title: group.root ? (
             <div
-              onClick={() => toggleGroup(group.id)}
-              style={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-              }}
+              style={{ display: "flex", alignItems: "center", height: "100%" }}
             >
-              {openGroups[group.id] ? <ExpandLess /> : <ExpandMore />}{" "}
-              {group.title}
+              <div
+                onClick={() => toggleGroup(group.id)}
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {openGroups[group.id] ? <ExpandMore /> : <ExpandLess />}{" "}
+                {group.title}
+              </div>
+              <div
+                style={{
+                  display: "block",
+                  alignItems: "center",
+                  marginLeft: "30px",
+                  width: "100px",
+                  height: "15px",
+                }}
+              >
+                <ProgressBar
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    border: "1px solid grey",
+                  }}
+                >
+                  <ProgressBar striped variant="success" now={50} />
+                  <ProgressBar striped now={20} />
+                </ProgressBar>
+              </div>
+              <div
+                style={{
+                  marginLeft: "30px",
+                  height: "100%",
+                }}
+              >
+                <p>3 Devs</p>
+              </div>
             </div>
           ) : (
-            <div style={{ paddingLeft: 20 }}>{group.title}</div>
+            <div
+              style={{ display: "flex", alignItems: "center", height: "100%" }}
+            >
+              <div style={{ paddingLeft: 20 }}>{group.title}</div>
+              <div
+                style={{
+                  display: "block",
+                  alignItems: "center",
+                  marginLeft: "30px",
+                  width: "100px",
+                  height: "15px",
+                }}
+              >
+                <ProgressBar
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    border: "1px solid grey",
+                  }}
+                >
+                  <ProgressBar striped variant="success" now={50} />
+                  <ProgressBar striped now={20} />
+                </ProgressBar>
+              </div>
+              <div
+                style={{
+                  marginLeft: "30px",
+                  height: "100%",
+                }}
+              >
+                <p>3 Devs</p>
+              </div>
+              <div
+                style={{
+                  marginLeft: "30px",
+                  height: "100%",
+                }}
+              >
+                {`${moment().format("DD/MM/YYYY")} -
+              ${moment().add(7, "days").format("DD/MM/YYYY")}`}
+              </div>
+            </div>
           ),
         });
       });
@@ -196,8 +277,8 @@ export function GanttChart() {
         minZoom={60 * 60 * 1000 * 24}
         itemTouchSendsClick={false}
         stackItems
-        sidebarWidth={500}
-        lineHeight={75}
+        sidebarWidth={550}
+        lineHeight={60}
         itemHeightRatio={0.75}
         canMove={true}
         canResize={"both"}
@@ -214,15 +295,19 @@ export function GanttChart() {
             {({ getRootProps }) => {
               return (
                 <GanttSideBarHeader {...getRootProps()}>
-                  <Select
-                    value={timeUnit}
-                    label="Time Unit"
-                    onChange={handleTimeHeaderChange}
-                  >
-                    <MenuItem value={"week"}>Week</MenuItem>
-                    <MenuItem value={"month"}>Month</MenuItem>
-                    <MenuItem value={"quarter"}>Quarter</MenuItem>
-                  </Select>
+                  <FormControl style={{ margin: "20px" }}>
+                    <InputLabel id={"timeUnitSelector"}>Time Unit</InputLabel>
+                    <Select
+                      labelId={"timeUnitSelector"}
+                      id={"timeUnitSelector"}
+                      value={timeUnit}
+                      onChange={handleTimeHeaderChange}
+                    >
+                      <MenuItem value={"week"}>Week</MenuItem>
+                      <MenuItem value={"month"}>Month</MenuItem>
+                      <MenuItem value={"quarter"}>Quarter</MenuItem>
+                    </Select>
+                  </FormControl>
                 </GanttSideBarHeader>
               );
             }}
@@ -283,12 +368,8 @@ export function GanttChart() {
           </TodayMarker>
         </TimelineMarkers>
       </Timeline>
-      <GanttButton variant="contained" onClick={onPrevClick}>
-        {"< Prev"}
-      </GanttButton>
-      <GanttButton variant="contained" onClick={onNextClick}>
-        {"Next >"}
-      </GanttButton>
+      <GanttButton onClick={onPrevClick}>{"< Prev"}</GanttButton>
+      <GanttButton onClick={onNextClick}>{"Next >"}</GanttButton>
     </div>
   );
 }
