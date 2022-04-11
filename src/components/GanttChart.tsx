@@ -5,6 +5,7 @@ import { ExpandMore, ExpandLess } from "../icons";
 import { Group } from "../models/group";
 import { Item } from "../models/item";
 import { GanttChartBar } from "./GanttChartBar";
+import { StatusBarTooltip } from "./StatusBarTooltip";
 
 import Timeline, {
   TimelineHeaders,
@@ -200,16 +201,18 @@ export function GanttChart() {
                   height: "15px",
                 }}
               >
-                <ProgressBar
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    border: "1px solid grey",
-                  }}
-                >
-                  <ProgressBar striped variant="success" now={50} />
-                  <ProgressBar striped now={20} />
-                </ProgressBar>
+                <StatusBarTooltip message={"Testing"}>
+                  <ProgressBar
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      border: "1px solid grey",
+                    }}
+                  >
+                    <ProgressBar striped variant="success" now={50} />
+                    <ProgressBar striped now={20} />
+                  </ProgressBar>
+                </StatusBarTooltip>
               </div>
               <div
                 style={{
