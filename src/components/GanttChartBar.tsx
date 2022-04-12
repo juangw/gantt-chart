@@ -3,6 +3,7 @@ import {
   TimelineItem,
 } from "react-calendar-timeline";
 import { Item } from "../models/item";
+import styled from "@emotion/styled";
 import React from "react";
 
 export function GanttChartBar({

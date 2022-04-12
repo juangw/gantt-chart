@@ -1,9 +1,10 @@
 import React from "react";
-import { GanttChart } from "./components/GanttChart";
 import { StylesProvider, ThemeProvider } from "@material-ui/core";
 import { ThemeProvider as SCThemeProvider } from "styled-components";
 import { defaultTheme } from "./theme";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { NavBar } from "./components/NavBar";
+import { InitiativeGanttChart } from "./components/InitiativeGanttChart";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <StylesProvider injectFirst>
         <ThemeProvider theme={defaultTheme}>
           <SCThemeProvider theme={defaultTheme}>
-            <GanttChart />
+            <NavBar />
+            <InitiativeGanttChart />
           </SCThemeProvider>
         </ThemeProvider>
       </StylesProvider>

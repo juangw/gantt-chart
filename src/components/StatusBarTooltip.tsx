@@ -1,10 +1,9 @@
-import { Tooltip } from "react-tippy";
 import React from "react";
-import { Divider } from "@mui/material";
+import { Tooltip } from "react-tippy";
 import styled from "@emotion/styled";
 
 type Props = {
-  message: string;
+  content: React.ReactNode;
 };
 
 const TooltipMessageBox = styled.div`
@@ -14,15 +13,12 @@ const TooltipMessageBox = styled.div`
   justify-content: center;
 `;
 
-export const StatusBarTooltip: React.FC<Props> = ({ message, children }) => (
+export const StatusBarTooltip: React.FC<Props> = ({ content, children }) => (
   <Tooltip
+    position="top-end"
     animation="none"
     animateFill={false}
-    html={
-      <TooltipMessageBox>
-        <strong>{message}</strong>
-      </TooltipMessageBox>
-    }
+    html={<TooltipMessageBox>{content}</TooltipMessageBox>}
     theme="dark"
   >
     {children}
